@@ -42,7 +42,7 @@ import { flattenValidationErrors } from "next-safe-action";
 import { ProductDto } from "@/app/_data-access/product/get-products";
 
 const formSchema = z.object({
-  productId: z.string().uuid({
+  productId: z.uuid({
     message: "O produto é obrigatório.",
   }),
   quantity: z.coerce.number().int().positive(),
@@ -171,7 +171,7 @@ const UpsertSheetContent = ({
     });
   };
   return (
-    <SheetContent className="!max-w-[700px]">
+    <SheetContent className="max-w-[700px]! p-6">
       <SheetHeader>
         <SheetTitle>Nova venda</SheetTitle>
         <SheetDescription>
