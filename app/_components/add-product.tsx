@@ -11,8 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Plus } from "lucide-react";
-import { z } from "zod";
+import { Loader2Icon, Plus } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -25,23 +24,18 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { NumericFormat } from "react-number-format";
-
-const formSchema = z.object({
-  name: z.string().trim().min(3, "O nome deve ter pelo menos 3 caracteres"),
-  price: z.number().min(0.01, "O preço deve ser maior que 0"),
-  stock: z.coerce
-    .number()
-    .positive({ message: "O estoque deve ser maior que 0" })
-    .int()
-    .min(0),
-});
-
-type FormValues = z.infer<typeof formSchema>;
+import { createProduct } from "../_actions/products/create-product/create-product";
+import {
+  createProductSchema,
+  CreateProductSchema,
+} from "../_actions/products/create-product/schema";
+import { useState } from "react";
 
 const AddProduct = () => {
-  const form = useForm<FormValues>({
+  const [dialogIsOpen, setDialogIsOpen] = useState(false);
+  const form = useForm<CreateProductSchema>({
     shouldUnregister: true,
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(createProductSchema),
     defaultValues: {
       name: "",
       price: 0,
@@ -49,12 +43,17 @@ const AddProduct = () => {
     },
   });
 
-  const onSubmit = (data: FormValues) => {
-    console.log(data);
+  const onSubmit = async (data: CreateProductSchema) => {
+    try {
+      await createProduct(data);
+      setDialogIsOpen(false);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
-    <Dialog>
+    <Dialog open={dialogIsOpen} onOpenChange={setDialogIsOpen}>
       <DialogTrigger asChild>
         <Button>
           <Plus size={20} />
@@ -115,11 +114,7 @@ const AddProduct = () => {
                 <FormItem>
                   <FormLabel>Estoque</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Estoque do produto"
-                      type="number"
-                      {...field}
-                    />
+                    <Input placeholder="Estoque do produto" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -131,7 +126,12 @@ const AddProduct = () => {
                   Cancelar
                 </Button>
               </DialogClose>
-              <Button type="submit">Salvar</Button>
+              <Button type="submit" disabled={form.formState.isSubmitting}>
+                {form.formState.isSubmitting && (
+                  <Loader2Icon className="animate-spin gap-1.5" size={20} />
+                )}
+                Salvar
+              </Button>
             </DialogFooter>
           </form>
         </Form>
