@@ -76,7 +76,7 @@ const AddProduct = () => {
                 <FormItem>
                   <FormLabel>Nome</FormLabel>
                   <FormControl>
-                    <Input placeholder="Nome do produto" {...field} />
+                    <Input placeholder="Digite o nome do produto" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -94,13 +94,14 @@ const AddProduct = () => {
                       decimalSeparator=","
                       fixedDecimalScale
                       decimalScale={2}
-                      customInput={Input}
-                      allowNegative={false}
                       prefix="R$ "
-                      onValueChange={(values) => {
-                        field.onChange(values.floatValue);
-                      }}
+                      allowNegative={false}
+                      customInput={Input}
+                      onValueChange={(values) =>
+                        field.onChange(values.floatValue)
+                      }
                       {...field}
+                      onChange={() => {}}
                     />
                   </FormControl>
                   <FormMessage />
@@ -114,7 +115,11 @@ const AddProduct = () => {
                 <FormItem>
                   <FormLabel>Estoque</FormLabel>
                   <FormControl>
-                    <Input placeholder="Estoque do produto" {...field} />
+                    <Input
+                      type="number"
+                      placeholder="Digite o estoque do produto"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

@@ -13,5 +13,5 @@ export const createProduct = async (data: CreateProductSchema) => {
       stock: data.stock,
     },
   });
-  revalidatePath("/products");
+  revalidatePath("/products", "page");
 };
