@@ -9,35 +9,38 @@ import {
 } from "@/components/ui/alert-dialog";
 import { deleteProduct } from "@/app/_actions/products/delete-product";
 import { toast } from "sonner";
+import { useAction } from "next-safe-action/hooks";
 
 interface DeleteProductDialogContentProps {
-  id: string;
+  productId: string;
 }
 
 const DeleteProductDialogContent = ({
-  id,
+  productId,
 }: DeleteProductDialogContentProps) => {
-  const handleDelete = async () => {
-    try {
-      await deleteProduct({ id });
-      toast.success("Produto excluído com sucesso!");
-    } catch (error) {
-      toast.error("Erro ao excluir produto!");
-      console.error(error);
-    }
-  };
+  const { execute: executeDeleteProduct } = useAction(deleteProduct, {
+    onSuccess: () => {
+      toast.success("Produto excluído com sucesso.");
+    },
+    onError: () => {
+      toast.error("Ocorreu um erro ao excluir o produto.");
+    },
+  });
+  const handleContinueClick = () => executeDeleteProduct({ id: productId });
   return (
     <AlertDialogContent>
       <AlertDialogHeader>
-        <AlertDialogTitle>Tem certeza absoluta?</AlertDialogTitle>
+        <AlertDialogTitle>Você tem certeza?</AlertDialogTitle>
         <AlertDialogDescription>
-          Esta ação não pode ser desfeita. Isso excluirá permanentemente o
-          produto e removerá todos os seus dados.
+          Você está prestes a excluir este produto. Esta ação não pode ser
+          desfeita. Deseja continuar?
         </AlertDialogDescription>
       </AlertDialogHeader>
       <AlertDialogFooter>
         <AlertDialogCancel>Cancelar</AlertDialogCancel>
-        <AlertDialogAction onClick={handleDelete}>Continuar</AlertDialogAction>
+        <AlertDialogAction onClick={handleContinueClick}>
+          Continuar
+        </AlertDialogAction>
       </AlertDialogFooter>
     </AlertDialogContent>
   );

@@ -1,22 +1,24 @@
 import { DataTable } from "@/components/ui/data-table";
-import { columns } from "./_components/table-columns";
-import { cashedGetProducts } from "@/app/_data-access/product/get-products";
-import AddProduct from "../_components/add-product";
+import { getProducts } from "@/app/_data-access/product/get-products";
+import Header, { HeaderLeft, HeaderRight, HeaderSubtitle, HeaderTitle } from "../_components/header";
+import CreateProductButton from "./_components/create-product-button";
+import { productTableColumns } from "./_components/table-columns";
+export const dynamic = "force-static";
 
 const ProductsPage = async () => {
-  const products = await cashedGetProducts();
+  const products = await getProducts();
   return (
-    <div className="m-8 w-full space-y-8 rounded-lg bg-white p-6">
-      <div className="flex w-full items-center justify-between">
-        <div className="space-y-1">
-          <span className="text-sx font-semibold text-slate-500">
-            Gestão de Produtos
-          </span>
-          <h2 className="text-xl font-semibold">Produtos</h2>
-        </div>
-        <AddProduct />
-      </div>
-      <DataTable columns={columns} data={JSON.parse(JSON.stringify(products))} />
+    <div className="m-8 w-full space-y-8 overflow-auto rounded-lg bg-white p-8">
+      <Header>
+        <HeaderLeft>
+          <HeaderSubtitle>Gestão de Produtos</HeaderSubtitle>
+          <HeaderTitle>Produtos</HeaderTitle>
+        </HeaderLeft>
+        <HeaderRight>
+          <CreateProductButton />
+        </HeaderRight>
+      </Header>
+      <DataTable columns={productTableColumns} data={products} />
     </div>
   );
 };
