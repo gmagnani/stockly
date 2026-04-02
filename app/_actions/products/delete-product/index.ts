@@ -6,7 +6,7 @@ import { deleteProductSchema } from "./schema";
 import { actionClient } from "@/lib/safe-actions";
 
 export const deleteProduct = actionClient
-  .schema(deleteProductSchema)
+  .inputSchema(deleteProductSchema)
   .action(async ({ parsedInput: { id } }) => {
     await db.product.delete({
       where: {

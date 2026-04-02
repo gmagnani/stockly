@@ -6,7 +6,7 @@ import { db } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
 export const deleteSale = actionClient
-  .schema(deleteSaleSchema)
+  .inputSchema(deleteSaleSchema)
   .action(async ({ parsedInput: { id } }) => {
     await db.$transaction(async (trx) => {
       const sale = await trx.sale.findUnique({

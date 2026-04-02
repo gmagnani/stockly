@@ -7,7 +7,7 @@ import { actionClient } from "@/lib/safe-actions";
 import { returnValidationErrors } from "next-safe-action";
 
 export const upsertSale = actionClient
-  .schema(upsertSaleSchema)
+  .inputSchema(upsertSaleSchema)
   .action(async ({ parsedInput: { products, id } }) => {
     const isUpdate = Boolean(id);
     await db.$transaction(async (trx) => {

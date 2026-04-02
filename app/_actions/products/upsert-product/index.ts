@@ -6,7 +6,7 @@ import { upsertProductSchema } from "./schema";
 import { actionClient } from "@/lib/safe-actions";
 
 export const upsertProduct = actionClient
-  .schema(upsertProductSchema)
+  .inputSchema(upsertProductSchema)
   .action(async ({ parsedInput: data }) => {
     await db.product.upsert({
       where: { id: data.id ?? "" },
