@@ -123,6 +123,7 @@ const UpsertProductDialogContent = ({
                     type="number"
                     placeholder="Digite o estoque do produto"
                     {...field}
+                    onChange={(e) => field.onChange(Number(e.target.value))}
                   />
                 </FormControl>
                 <FormMessage />

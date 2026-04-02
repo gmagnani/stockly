@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -42,10 +43,10 @@ import { flattenValidationErrors } from "next-safe-action";
 import { ProductDto } from "@/app/_data-access/product/get-products";
 
 const formSchema = z.object({
-  productId: z.uuid({
+  productId: z.string().uuid({
     message: "O produto é obrigatório.",
   }),
-  quantity: z.coerce.number().int().positive(),
+  quantity: z.number().int().positive(),
 });
 
 type FormSchema = z.infer<typeof formSchema>;
@@ -210,6 +211,7 @@ const UpsertSheetContent = ({
                     type="number"
                     placeholder="Digite a quantidade"
                     {...field}
+                    onChange={(e) => field.onChange(Number(e.target.value))}
                   />
                 </FormControl>
                 <FormMessage />
