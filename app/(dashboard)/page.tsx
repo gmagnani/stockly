@@ -49,7 +49,7 @@ const Home = async () => {
         </Suspense>
       </div>
 
-      <div className="grid min-h-0 grid-cols-[minmax(0,2.5fr),minmax(0,1fr)] gap-6">
+      <div className="grid min-h-0 grid-cols-[2fr_1fr] gap-6">
         <Suspense
           fallback={
             <Skeleton className="bg-white p-6">
