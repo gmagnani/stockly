@@ -171,12 +171,14 @@ const UpsertSheetContent = ({
       })),
     });
   };
+
+  const isEditing = !!defaultSelectedProducts;
   return (
     <SheetContent className="max-w-[700px]! p-6">
       <SheetHeader>
-        <SheetTitle>Nova venda</SheetTitle>
+        <SheetTitle>{isEditing ? "Editar venda" : "Nova venda"}</SheetTitle>
         <SheetDescription>
-          Insira as informações da venda abaixo.
+          {isEditing ? "Edite as informações da venda abaixo." : "Insira as informações da venda abaixo."}
         </SheetDescription>
       </SheetHeader>
 
