@@ -21,7 +21,7 @@ export const dynamic = "force-dynamic";
 
 const Home = async () => {
   return (
-    <div className="m-8 flex w-full flex-col space-y-8 rounded-lg">
+    <div className="m-8 flex w-full flex-col space-y-8 overflow-auto rounded-lg pb-8">
       <Header>
         <HeaderLeft>
           <HeaderSubtitle>Visão geral dos dados</HeaderSubtitle>
@@ -29,7 +29,7 @@ const Home = async () => {
         </HeaderLeft>
       </Header>
 
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <Suspense fallback={<SummaryCardSkeleton />}>
           <TotalRevenueCard />
         </Suspense>
@@ -37,7 +37,7 @@ const Home = async () => {
           <TodayRevenueCard />
         </Suspense>
       </div>
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
         <Suspense fallback={<SummaryCardSkeleton />}>
           <TotalSalesCard />
         </Suspense>
@@ -49,7 +49,7 @@ const Home = async () => {
         </Suspense>
       </div>
 
-      <div className="grid min-h-0 grid-cols-[2fr_1fr] gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6">
         <Suspense
           fallback={
             <Skeleton className="bg-white p-6">

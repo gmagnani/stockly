@@ -7,7 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 const MostSoldProducts = async () => {
   const mostSoldProducts = await getMostSoldProducts();
   return (
-    <div className="flex h-full flex-col overflow-hidden rounded-xl bg-white">
+    <div className="flex flex-col rounded-xl bg-white lg:h-full lg:overflow-hidden">
       <p className="p-6 text-lg font-semibold text-slate-900">
         Produtos mais vendidos
       </p>
